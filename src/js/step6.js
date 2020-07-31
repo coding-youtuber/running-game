@@ -22,7 +22,6 @@ let distance = 0;
 
 let isOver = false;
 let loop;
-let blockSpeed = 3;
 
 function updateScore() {
   scoreTextBox.innerHTML = Math.floor(distance);
@@ -55,7 +54,7 @@ let block = Sprite({
   color: '#ff0',  // fill color of the me rectangle
   width: 10,     // width and height of the me rectangle
   height: 20,
-  dx: -blockSpeed,
+  dx: -3,
   anchor: {x: 1, y: 1}
 });
 
@@ -101,7 +100,6 @@ image.onload = function() {
 
   loop = GameLoop({  // create the main game loop
     update: function() { // update the game state
-
       if(keyPressed("up")) {
         console.log("up");
 
@@ -138,10 +136,6 @@ image.onload = function() {
 
       updateScore();
 
-      if(Math.floor(distance) % 2 == 0) {
-        block.dx = -Math.random() * blockSpeed - 3;
-      }
-
       if(distance > 100) {
         isOver = true
         loop.stop();
@@ -164,7 +158,6 @@ document.addEventListener("keyup", function(k){
     loop.start();
     isOver = false;
     block.x = canvas.width;
-    block.dx = -blockSpeed;
     helpMessage.innerHTML = "";
     
     distance = 0;

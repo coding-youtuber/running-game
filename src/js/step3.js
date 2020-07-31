@@ -14,19 +14,7 @@ const maxUp = 25;
 const gravityY = 1;
 const jumpPower = 3;
 
-const scoreTextBox = document.getElementById("score");
-const helpMessage = document.getElementById("help-message");
-
 let upScore = 0;
-let distance = 0;
-
-let isOver = false;
-let loop;
-let blockSpeed = 3;
-
-function updateScore() {
-  scoreTextBox.innerHTML = Math.floor(distance);
-}
 
 function jump(sprite) {
   upScore++;
@@ -53,9 +41,9 @@ let block = Sprite({
   x: canvas.width,        // starting x,y position of the me
   y: canvas.height - 50,
   color: '#ff0',  // fill color of the me rectangle
-  width: 10,     // width and height of the me rectangle
+  width: 30,     // width and height of the me rectangle
   height: 20,
-  dx: -blockSpeed,
+  dx: -2,
   anchor: {x: 1, y: 1}
 });
 
@@ -99,9 +87,8 @@ image.onload = function() {
     animations: spriteSheet.animations,
   });
 
-  loop = GameLoop({  // create the main game loop
+  let loop = GameLoop({  // create the main game loop
     update: function() { // update the game state
-
       if(keyPressed("up")) {
         console.log("up");
 
@@ -124,30 +111,6 @@ image.onload = function() {
       if(block.x < 0) {
         block.x = canvas.width;
       }
-
-      if(player.collidesWith(block)) {
-        console.log("collide");
-
-        isOver = true;
-
-        loop.stop();
-        helpMessage.innerHTML = "Restart: Press Enter Key"
-      } else {
-        distance += 0.2;
-      }
-
-      updateScore();
-
-      if(Math.floor(distance) % 2 == 0) {
-        block.dx = -Math.random() * blockSpeed - 3;
-      }
-
-      if(distance > 100) {
-        isOver = true
-        loop.stop();
-        helpMessage.innerHTML = "GAME CLEAR!!!Restart: Press Enter Key"
-      }
-      
     },
     render: function() { // render the game state
       player.render();
@@ -158,16 +121,3 @@ image.onload = function() {
 
   loop.start();    // start the game
 };
-
-document.addEventListener("keyup", function(k){
-  if(isOver && k.code == "Enter") {
-    loop.start();
-    isOver = false;
-    block.x = canvas.width;
-    block.dx = -blockSpeed;
-    helpMessage.innerHTML = "";
-    
-    distance = 0;
-
-  }
-});
