@@ -1,47 +1,28 @@
 ![capture](https://user-images.githubusercontent.com/58985013/89116158-dda13280-d4cb-11ea-9d8e-65471ddcef3c.jpg)
 
+https://youtu.be/v23Z6g1yRI4
 
-# <p align="center"><a href='https://github.com/Dugnist/html5-boilerplate'><img width="200" src="http://css-live.ru/wp-content/uploads/2017/06/web1.png" alt="html5-boilerplate" /></a><br/> html5-boilerplate </p>
-
-ボイラープレートを使っています。フロントエンドの環境を簡単に設定するためのテンプレートファイルみたいなものです。下記のリポジトリのものを使っています。
-
-ビルドの仕方の参考にしてください。
-
-### Get started
+### 環境準備
 
 ```
-  git clone https://github.com/Dugnist/html5-boilerplate.git my_project
+  git clone git@github.com:coding-youtuber/running-game.git my_project
   cd my_project
   npm i
   npm start
 ```
 
-### Put your files into /src folder.
 
-Don't forget add to index.html this line:
+### サーバ起動
+
 ```
-  <script type="text/javascript" src="../build/app.js"></script>
+npm run start
 ```
 
-### For build
+### ビルド
 
 ```
   npm run build
 ```
-
-### Features
-
-- Lightweight, fast opened.
-- Webpack livereload separated config
-- Html5/Css3/JS(es6/vanilla)/images(png, jpg, gif, svg) optimization/minify.
-- Include 5 pure css media queries points and best normalize css practices.
-- Include all you needed html meta tags.
-- ES6 and browserify syntax support. (require, arrow func, let const etc...).
-
-### 2020 updates
-
-- SASS support (thanks @patrikniebur)
-
 
 # 参考
 
