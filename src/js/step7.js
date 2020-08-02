@@ -1,7 +1,11 @@
+
+// const testModules = require('./test-module');
 require('../css/app.css');
 require('../scss/style.scss');
 
-import { init, Sprite, SpriteSheet, GameLoop, initKeys, keyPressed } from "kontra";
+/********** Paste your code here! ************/
+
+import { init, Sprite, SpriteSheet, GameLoop, initKeys, keyPressed } from 'kontra';
 
 let { canvas } = init();
 initKeys();
@@ -11,7 +15,7 @@ const gravityY = 1;
 const jumpPower = 3;
 
 const scoreTextBox = document.getElementById("score");
-const helpMessage = document.getElementById("help-message")
+const helpMessage = document.getElementById("help-message");
 
 let upScore = 0;
 let distance = 0;
@@ -26,7 +30,6 @@ function updateScore() {
 
 function jump(sprite) {
   upScore++;
-
   if(upScore < maxUp) {
     sprite.playAnimation("jump");
     sprite.y -= jumpPower;
@@ -47,36 +50,37 @@ function gravity(sprite) {
 }
 
 let block = Sprite({
-  x: canvas.width,
+  x: canvas.width,        // starting x,y position of the me
   y: canvas.height - 50,
-  color: "#ff0",
-  width: 30,
+  color: '#ff0',  // fill color of the me rectangle
+  width: 10,     // width and height of the me rectangle
   height: 20,
   dx: -blockSpeed,
   anchor: {x: 1, y: 1}
 });
 
-
 let ground = Sprite({
   x: 0,
   y: canvas.height - 50,
-  color: "#a0a0a0",
+  color: '#a0a0a0',
   width: canvas.width,
-  height: 50
+  height: 50,
 });
 
 let image = new Image();
-image.src = "images/character_walk_sheet.png";
+// image.src = 'images/Platformer_SpriteSheet.png';
+image.src = 'images/character_walk_sheet.png';
 
 image.onload = function() {
-
+  
   let spriteSheet = SpriteSheet({
     image: image,
     frameWidth: 72,
     frameHeight: 97,
     animations: {
+      // create a named animation: walk
       walk: {
-        frames: "0..9",
+        frames: "0..9",  // frames 0 through 9
         frameRate: 30
       },
       jump: {
@@ -91,15 +95,20 @@ image.onload = function() {
     y: 305,
     anchor: {x: 0.5, y: 0.5},
 
-    animations: spriteSheet.animations
+    // use the sprite sheet animations for the sprite
+    animations: spriteSheet.animations,
   });
 
-  loop = GameLoop({
-    update: function() {
+  loop = GameLoop({  // create the main game loop
+    update: function() { // update the game state
+
       if(keyPressed("up")) {
         console.log("up");
+
         jump(player);
       } else {
+        // console.log("unpressed");
+
         stopJump(player);
       }
 
@@ -109,7 +118,6 @@ image.onload = function() {
         jumpCoolOff(player);
       }
 
-      
       player.update();
       block.update();
 
@@ -119,13 +127,11 @@ image.onload = function() {
 
       if(player.collidesWith(block)) {
         console.log("collide");
-        distance = 0;
 
         isOver = true;
 
         loop.stop();
-        helpMessage.innerHTML = "Restart: Press Enter Key";
-        
+        helpMessage.innerHTML = "Restart: Press Enter Key"
       } else {
         distance += 0.2;
       }
@@ -137,34 +143,31 @@ image.onload = function() {
       }
 
       if(distance > 100) {
-        isOver = true;
+        isOver = true
         loop.stop();
-        helpMessage.innerHTML = "GAME CLEAR!!Restart: Press Enter Key";
+        helpMessage.innerHTML = "GAME CLEAR!!!Restart: Press Enter Key"
       }
-
+      
     },
-    render: function() {
+    render: function() { // render the game state
       player.render();
       ground.render();
       block.render();
-
     }
   });
-  
-  loop.start();
+
+  loop.start();    // start the game
 };
 
-document.addEventListener("keyup", function(k) {
+document.addEventListener("keyup", function(k){
   if(isOver && k.code == "Enter") {
     loop.start();
     isOver = false;
-    console.log("press enter key");
-
     block.x = canvas.width;
+    block.dx = -blockSpeed;
     helpMessage.innerHTML = "";
-
-    distance = 0;
     
+    distance = 0;
+
   }
 });
-
